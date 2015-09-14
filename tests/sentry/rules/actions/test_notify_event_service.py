@@ -1,4 +1,4 @@
-from mock import patch
+from mock import MagicMock
 
 from sentry.testutils.cases import RuleTestCase
 from sentry.rules.actions.notify_event_service import NotifyEventServiceAction
@@ -7,13 +7,17 @@ from sentry.rules.actions.notify_event_service import NotifyEventServiceAction
 class NotifyEventServiceActionTest(RuleTestCase):
     rule_cls = NotifyEventServiceAction
 
-    @patch('sentry.plugins.sentry_mail.models.MailPlugin.notify')
     def test_applies_correctly(self, mail_notify):
         event = self.get_event()
 
+        plugin = MagicMock()
         rule = self.get_rule({
             'service': 'mail',
         })
-        rule.after(event=event, state=self.get_state())
+        rule.get_plugins = lambda: (plugin,)
 
-        assert mail_notify.call_count is 1
+        results = list(rule.after(event=event, state=self.get_state()))
+
+        assert len(results) is 1
+        assert plugin.should_notify.call_count is 1
+        assert results[0].callback is plugin.rule_notify

@@ -14,4 +14,4 @@ class NotifyEventActionTest(RuleTestCase):
         rule = self.get_rule()
         rule.after(event=event, state=self.get_state())
 
-        mail_notify_users.assert_called_once()
+        assert mail_notify_users.call_count is 1

@@ -5,8 +5,7 @@ import _ from 'underscore';
 import PropTypes from '../../proptypes';
 
 import EventDataSection from './eventDataSection';
-import {isUrl, isOwnersTag, getOwnershipServiceUrl} from '../../utils';
-import {isUrl, deviceNameMapper} from '../../utils';
+import {isUrl, isOwnersTag, getOwnershipServiceUrl, deviceNameMapper} from '../../utils';
 import {t} from '../../locale';
 import Pills from '../pills';
 import Pill from '../pill';

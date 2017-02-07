@@ -79,7 +79,7 @@ const EventTags = React.createClass({
                             <em className="icon-open" />
                           </a>
                         }
-                        <span>&nbsp;&nbsp;</span>
+                        <span>&nbsp;</span>
                       </span>
                     )
                   })

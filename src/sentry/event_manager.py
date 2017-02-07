@@ -471,16 +471,17 @@ class EventManager(object):
                 del tags['user']
             tags['sentry:user'] = event_user.tag_value
 
+        # tags are stored as a tuple
+        tags = tags.items()
+
+        # plugins could choose to return multiple values for a tag key
         for plugin in plugins.for_project(project, version=None):
             added_tags = safe_execute(plugin.get_tags, event,
                                       _with_transaction=False)
             if added_tags:
                 # plugins should not override user provided tags
                 for key, value in added_tags:
-                    tags.setdefault(key, value)
-
-        # tags are stored as a tuple
-        tags = tags.items()
+                    tags.append((key, value))
 
         # XXX(dcramer): we're relying on mutation of the data object to ensure
         # this propagates into Event

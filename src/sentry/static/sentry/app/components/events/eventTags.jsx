@@ -5,6 +5,7 @@ import _ from 'underscore';
 import PropTypes from '../../proptypes';
 
 import EventDataSection from './eventDataSection';
+import {isUrl, isOwnersTag, getOwnershipServiceUrl} from '../../utils';
 import {isUrl, deviceNameMapper} from '../../utils';
 import {t} from '../../locale';
 import Pills from '../pills';
@@ -56,7 +57,7 @@ const EventTags = React.createClass({
           className="p-b-1"
           >
         <Pills className="no-margin">
-          {tags.map((tag) => {
+          {results.map((tag) => {
             return (
               <Pill key={tag.key} name={tag.key}>
                 <Link
@@ -71,6 +72,12 @@ const EventTags = React.createClass({
                     <em className="icon-open" />
                   </a>
                 }
+                {isOwnersTag(tag.key) &&
+                  <a href={getOwnershipServiceUrl(value)} className="external-icon">
+                    <em className="icon-open" />
+                  </a>
+                }
+                <span>&nbsp;&nbsp;</span>
               </Pill>
             );
           })}

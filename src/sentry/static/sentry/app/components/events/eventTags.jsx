@@ -59,24 +59,31 @@ const EventTags = React.createClass({
           {results.map((tag) => {
             return (
               <Pill key={tag.key} name={tag.key}>
-                <Link
-                  to={{
-                    pathname: `/${orgId}/${projectId}/`,
-                    query: {query: `${tag.key}:"${tag.value}"`}
-                  }}>
-                    {deviceNameMapper(tag.value)}
-                </Link>
-                {isUrl(tag.value) &&
-                  <a href={tag.value} className="external-icon">
-                    <em className="icon-open" />
-                  </a>
+                {tag.values.map((value) => {
+                    return (
+                      <span>
+                        <Link
+                          to={{
+                            pathname: `/${orgId}/${projectId}/`,
+                            query: {query: `${tag.key}:"${value}"`}
+                          }}>
+                            {deviceNameMapper(value)}
+                        </Link>
+                        {isUrl(value) &&
+                          <a href={value} className="external-icon">
+                            <em className="icon-open" />
+                          </a>
+                        }
+                        {isOwnersTag(tag.key) &&
+                          <a href={getOwnershipServiceUrl(value)} className="external-icon">
+                            <em className="icon-open" />
+                          </a>
+                        }
+                        <span>&nbsp;&nbsp;</span>
+                      </span>
+                    )
+                  })
                 }
-                {isOwnersTag(tag.key) &&
-                  <a href={getOwnershipServiceUrl(value)} className="external-icon">
-                    <em className="icon-open" />
-                  </a>
-                }
-                <span>&nbsp;&nbsp;</span>
               </Pill>
             );
           })}

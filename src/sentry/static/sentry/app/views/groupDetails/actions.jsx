@@ -203,9 +203,6 @@ const GroupActions = React.createClass({
               <MenuItem noAnchor={true}>
                 <a onClick={this.customSnoozeClicked}>{t('until custom date...')}</a>
               </MenuItem>
-              <MenuItem noAnchor={true}>
-                <a onClick={this.onUpdate.bind(this, {status: 'ignored'})}>{t('forever')}</a>
-              </MenuItem>
             </DropdownLink>
           }
         </div>
